@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<!-- *************************************************************************** -->
+	<!--  Commmon header -->
+	<!-- *************************************************************************** -->
+	
+	<entry key="apidoc.title">Gateway API REST</entry>
+	<entry key="apidoc.package">com</entry>
+	
+	<entry key="apidoc.description">Gateway multiple services.</entry>
+
+	
+	<entry key="response.400">Bad Formed</entry>
+	<entry key="response.401">Unauthorized</entry>
+	<entry key="response.403">Forbidden</entry>
+	<entry key="response.404">Not Found</entry>
+	<entry key="response.409">Conflict</entry>
+	<entry key="response.412">Could not delete the workstation</entry>
+	<entry key="response.415">Unsupported Media Type</entry>
+	
+	<entry key="response.200">Successful response</entry>
+	<entry key="response.201">Created</entry>
+	<entry key="response.204">No content</entry>
+	
+	
+</properties>

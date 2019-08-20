@@ -1,0 +1,184 @@
+# --------------------------------------------
+# SERVER CONFIGURATION
+# -------------------------------------------- 
+server: 
+  port: 8081
+  context-path: /api
+
+# --------------------------------------------
+# SPRING SECURITY CONFIGURATION 
+# --------------------------------------------   
+security: 
+  ignored: /health
+  basic:
+    enabled: true                   
+  filter-order: 10
+  user:
+    name: admin
+    password: s3cr3t
+  filters:
+    enabled: true
+       
+management:
+  health:
+    redis:
+      enabled: false
+  context-path: /admin
+  security:
+    enabled: false
+
+# --------------------------------------------
+# LOG CONFIGURATION
+# --------------------------------------------    
+logging:
+  file: ${spring.application.name}.log
+  path: /var/log       
+
+# --------------------------------------------
+# MICROSERVICE NAME
+# -------------------------------------------- 
+spring:  
+  application:
+    name: gateway
+       
+# --------------------------------------------
+# SPRING APP CONFIGURATION
+# --------------------------------------------    
+  jmx: 
+    default-domain: cloud.config.server
+  aop: 
+    proxy-target-class: false
+  profiles: 
+    active: test
+    
+    
+# --------------------------------------------
+# SPRING CACHE 
+# --------------------------------------------
+  cache:
+    type: simple  
+        
+# --------------------------------------------
+# SPRING CLOUD CONFIGURATION
+# --------------------------------------------  
+  cloud:
+    service-registry:
+      auto-registration:
+        fail-fast: false
+    config:
+      fail-fast: false
+      retry:
+        max-interval: 1000
+        max-attempts: 10000
+      discovery:
+        enabled: false
+        service-id: cloud-config
+        
+# --------------------------------------------
+# SPRING MQ CONFIGURATION
+# --------------------------------------------  
+  rabbitmq:
+    host: ${RABBIT_URI:127.0.0.1}
+    port: ${RABBIT_PORT:5672}
+    username: ${RABBIT_USER:guest}
+    password: ${RABBIT_PASS:guest}
+            
+# --------------------------------------------
+# SLEUTH CONFIGURATION
+# --------------------------------------------         
+  sleuth:
+    enabled: true
+    sampler:
+      percentage: 0.0
+    rxjava:
+      schedulers:
+        hook:
+          enabled: false
+        
+# --------------------------------------------
+# EUREKA CONFIGURATION
+# -------------------------------------------- 
+eureka: 
+  instance:
+    prefer-ip-address: true 
+    lease-renewal-interval-in-seconds: 30
+  client:   
+    serviceUrl:
+      defaultZone: ${DISCOVERY_URI:http://localhost:8082/eureka}
+    enabled: false 
+    register-with-eureka: false
+    fetch-registry: false   
+      
+# --------------------------------------------
+# RIBBON CONFIGURATION
+# --------------------------------------------       
+ribbon:
+  eureka: 
+    enabled: true
+  ConnectTimeout: 10000
+  ReadTimeout: 60000                           
+
+
+# --------------------------------------------
+# HYSTRIX CONFIGURATIONS 
+# --------------------------------------------
+hystrix: 
+  command:
+    default:
+      execution: 
+        isolation: 
+          thread:
+            timeoutInMilliseconds: 60000
+                
+# --------------------------------------------
+# CUSTOM CONFIGURATIONS 
+# --------------------------------------------
+custom: 
+  logger:
+    enabled: false  
+  common:
+    swagger: false
+
+# --------------------------------------------
+# ZUUL CONFIGURATIONS 
+# --------------------------------------------    
+zuul:
+  host:
+    socket-timeout-millis: 60000
+  retryable: true 
+  
+# --------------------------------------------
+# ZUUL CLOUD SERVERS ROUTES CONFIGURATION 
+# --------------------------------------------          
+    gateway: 
+        path: /gateway/**
+        serviceId: gateway
+    config: 
+        path: /config/**
+        serviceId: cloud-config 
+    languages:
+        path: /lang/**
+        serviceId:  cloud-config        
+    eureka_fonts: 
+        path: /eureka/fonts/**
+        url:  http://localhost:8082/eureka/fonts/
+    eureka_css:
+        path: /eureka/css/**
+        url:  http://localhost:8082/eureka/css/
+    eureka_js:
+        path: /eureka/js/**
+        url:  http://localhost:8082/eureka/js/
+    eureka_images:
+        path: /eureka/images/**
+        url:  http://localhost:8082/eureka/images/
+    eureka:
+        path: /eureka/**
+        url:  http://localhost:8082/
+        
+# --------------------------------------------
+# ZUUL MICROSERVICES ROUTES CONFIGURATION 
+# --------------------------------------------            
+    log:
+        path: /log/**
+        serviceId: logger
+   

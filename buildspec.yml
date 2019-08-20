@@ -1,0 +1,46 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Instalando..
+      - apt-get update -y
+      - apt-get install -y software-properties-common
+      - add-apt-repository ppa:openjdk-r/ppa
+      - apt-get update -y
+      - apt-get install -y openjdk-8-jdk
+      - apt-get install -y maven
+      
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+      - REPOSITORY_URI=$IMAGE_REPO_URI/$IMAGE_REPO_NAME
+      - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
+      - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+  build:
+    commands:
+      - echo Entered the build phase...
+      - echo Build started on `date`
+      - rm -rf /root/.m2/repository/com/
+      - mvn package -DskipTests
+      - echo Building the Docker image...          
+      - docker build -t $REPOSITORY_URI:latest .
+      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG     
+         
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker push $REPOSITORY_URI:latest
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - echo Writing image definitions file...
+      - printf '[{"name":"%s","imageUri":"%s"}]' $IMAGE_REPO_NAME $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+cache:
+  paths:
+     - '/var/cache/apt/archives/**/*' 
+     - '/root/.cache/**/*'
+     - '/root/.m2/**/*'
+artifacts:
+  files: imagedefinitions.json

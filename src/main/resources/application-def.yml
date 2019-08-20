@@ -1,0 +1,239 @@
+# --------------------------------------------
+# SERVER CONFIGURATION
+# -------------------------------------------- 
+server: 
+  port: 8083
+  context-path: /
+
+# --------------------------------------------
+# SPRING SECURITY CONFIGURATION 
+# --------------------------------------------   
+security: 
+  ignored: /swagger-ui.html, /webjars/**, /swagger-resources/**, /v2/api-docs/**, /configuration/ui/**, /configuration/security/**, /health
+  basic:
+    enabled: true                   
+  filter-order: 10
+  user:
+    name: admin
+    password: s3cr3t
+    
+management:
+  context-path: /admin
+  security:
+    enabled: false
+
+# --------------------------------------------
+# LOG CONFIGURATION
+# --------------------------------------------    
+logging:
+  file: ${spring.application.name}.log
+  path: /var/log   
+       
+# --------------------------------------------
+# SPRING APP CONFIGURATION
+# --------------------------------------------    
+spring:    
+  jmx: 
+    default-domain: cloud.config.server
+  aop: 
+    proxy-target-class: false
+  profiles: 
+    active: def
+  mvc:
+    throw-exception-if-no-handler-found: true
+    resources:
+      add-mappings: false    
+        
+# --------------------------------------------
+# SPRING CACHE 
+# --------------------------------------------
+  cache:
+    type: simple  
+        
+# --------------------------------------------
+# SPRING MQ CONFIGURATION
+# --------------------------------------------  
+  rabbitmq:
+    host: ${RABBIT_URI:127.0.0.1}
+    port: ${RABBIT_PORT:5672}
+    username: ${RABBIT_USER:guest}
+    password: ${RABBIT_PASS:guest}
+            
+# --------------------------------------------
+# SLEUTH CONFIGURATION
+# --------------------------------------------         
+  sleuth:
+    enabled: true
+    sampler:
+      percentage: 0.0
+    rxjava:
+      schedulers:
+        hook:
+          enabled: false
+            
+# --------------------------------------------
+# RIBBON CONFIGURATION
+# --------------------------------------------       
+ribbon:
+  eureka: 
+    enabled: true                       
+    
+# --------------------------------------------
+# HYSTRIX CONFIGURATIONS
+# --------------------------------------------
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+    gateway:
+      execution:
+        timeout:
+          enabled: false
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1500000
+    config:
+      execution:
+        timeout:
+          enabled: false
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1500000
+    languages:
+      execution:
+        timeout:
+          enabled: false
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1500000
+    eureka_fonts:
+      execution:
+        timeout:
+          enabled: false
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1500000
+    eureka_css:
+      execution:
+        timeout:
+          enabled: false
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1500000
+    eureka_js:
+      execution:
+        timeout:
+          enabled: false
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1500000
+    eureka_images:
+      execution:
+        timeout:
+          enabled: false
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1500000
+    eureka:
+      execution:
+        timeout:
+          enabled: false
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1500000
+    log:
+      execution:
+        timeout:
+          enabled: false
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1500000
+    rabbit:
+      execution:
+        timeout:
+          enabled: false
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1500000
+                        
+# --------------------------------------------
+# CUSTOM CONFIGURATIONS 
+# --------------------------------------------
+custom: 
+  logger:
+    enabled: false  
+  common:
+    swagger: false
+
+# --------------------------------------------
+# ZUUL CONFIGURATIONS
+# --------------------------------------------
+zuul: 
+  restrictionsRefreshIntervalInSeconds: 60
+  host:
+    connect-timeout-millis: 60000
+    socket-timeout-millis: 60000
+  debug:
+    request: true
+  include-debug-header: true
+  filters:
+    inJsonSchemaFilterEnabled: false
+    outJsonSchemaFilterEnabled: false
+    inJoltSpecFilterEnabled: false
+    outJoltSpecFilterEnabled: false
+    rateLimitFiltersEnabled: false
+    consumerRegistrationFilterEnabled: false
+    responseFilterEnabled: true
+    channelIdentificationFilterEnabled: false
+  consumers: []
+  channels: []
+  restrictions: []
+  mitigations: []
+  retryable: true
+  
+# --------------------------------------------
+# ZUUL CLOUD SERVERS ROUTES CONFIGURATION 
+# --------------------------------------------  
+  routes: 
+    gateway_admin: 
+      path: /gateway/admin/**
+      url: http://localhost:8083/admin/      
+    config: 
+      path: /config/**
+      serviceId: cloud-config 
+    languages:
+      path: /lang/**
+      serviceId:  cloud-config          
+    eureka_fonts: 
+      path: /eureka/fonts/**
+      url:  http://localhost:8082/eureka/fonts/
+    eureka_css:
+      path: /eureka/css/**
+      url:  http://localhost:8082/eureka/css/    
+    eureka_js:
+      path: /eureka/js/**
+      url:  http://localhost:8082/eureka/js/             
+    eureka_images:
+      path: /eureka/images/**
+      url:  http://localhost:8082/eureka/images/  
+    eureka:
+      path: /eureka/**
+      url:  http://localhost:8082   
+      
+# --------------------------------------------
+# ZUUL MICROSERVICES ROUTES CONFIGURATION 
+# --------------------------------------------      
+    log:
+      path: /api/log/**
+      serviceId: logger  
+ 
+# --------------------------------------------
+# ZUUL WEB ROUTES CONFIGURATION 
+# --------------------------------------------       
+
+    rabbit:
+      path: /rabbit/**
+      url:  http://localhost:15672/             

@@ -1,0 +1,39 @@
+# --------------------------------------------
+# MICROSERVICE NAME
+# -------------------------------------------- 
+spring:  
+  application:
+    name: gateway
+    
+# --------------------------------------------
+# CLOUD CONFIGURATION
+# --------------------------------------------     
+  cloud:
+    service-registry:
+      auto-registration:
+        fail-fast: false
+    config:
+      enabled: true     
+      label: ${GITCONFIG_LABEL:master}
+      fail-fast: false
+      retry: 
+        max-interval: 2000
+        max-attempts: 5            
+      discovery:
+        enabled: true
+        service-id: cloud-config  
+
+# --------------------------------------------
+# EUREKA CONFIGURATION
+# --------------------------------------------         
+eureka:
+  instance:
+    prefer-ip-address: true 
+    lease-renewal-interval-in-seconds: 30
+  client:   
+    serviceUrl:
+      defaultZone: ${DISCOVERY_URI:http://localhost:8082/eureka}
+    enabled: true 
+    register-with-eureka: true
+    fetch-registry: true             
+  
