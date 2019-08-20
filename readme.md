@@ -27,6 +27,6 @@ The projects under the Gateway must be launched with profile = loc to test it in
 
 Run with spring.profiles.active=def to run the microservice stand-alone
 
-Run with spring.profiles.active=loc with cloud configuration, discovery service and vac-logger
+Run with spring.profiles.active=loc with cloud configuration, discovery service and logger
 
 Run with spring.profiles.active=dev
