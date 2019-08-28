@@ -6,11 +6,9 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.servlet.DispatcherServlet;
 
 import com.GatewayApplication;
-import com.common.logger.LoggerReconfigurator;
 
 /**
  * The Class ApiGatewayApplicationTest.
@@ -23,8 +21,8 @@ public class GatewayConsoleApplicationTest {
 	 */
 	@Before
 	public void setUp() {
-		ReflectionTestUtils.setField(LoggerReconfigurator.class, "appName",
-				"gateway");
+		// ReflectionTestUtils.setField(LoggerReconfigurator.class, "appName",
+		// "gateway");
 	}
 
 	/**

@@ -150,35 +150,35 @@ zuul:
 # --------------------------------------------
 # ZUUL CLOUD SERVERS ROUTES CONFIGURATION 
 # --------------------------------------------          
-    gateway: 
-        path: /gateway/**
-        serviceId: gateway
-    config: 
-        path: /config/**
-        serviceId: cloud-config 
-    languages:
-        path: /lang/**
-        serviceId:  cloud-config        
-    eureka_fonts: 
-        path: /eureka/fonts/**
-        url:  http://localhost:8082/eureka/fonts/
-    eureka_css:
-        path: /eureka/css/**
-        url:  http://localhost:8082/eureka/css/
-    eureka_js:
-        path: /eureka/js/**
-        url:  http://localhost:8082/eureka/js/
-    eureka_images:
-        path: /eureka/images/**
-        url:  http://localhost:8082/eureka/images/
-    eureka:
-        path: /eureka/**
-        url:  http://localhost:8082/
+  gateway: 
+      path: /gateway/**
+      serviceId: gateway
+  config: 
+      path: /config/**
+      serviceId: cloud-config 
+  languages:
+      path: /lang/**
+      serviceId:  cloud-config        
+  eureka_fonts: 
+      path: /eureka/fonts/**
+      url:  http://localhost:8082/eureka/fonts/
+  eureka_css:
+      path: /eureka/css/**
+      url:  http://localhost:8082/eureka/css/
+  eureka_js:
+      path: /eureka/js/**
+      url:  http://localhost:8082/eureka/js/
+  eureka_images:
+      path: /eureka/images/**
+      url:  http://localhost:8082/eureka/images/
+  eureka:
+      path: /eureka/**
+      url:  http://localhost:8082/
         
 # --------------------------------------------
 # ZUUL MICROSERVICES ROUTES CONFIGURATION 
 # --------------------------------------------            
-    log:
-        path: /log/**
-        serviceId: logger
+  log:
+      path: /log/**
+      serviceId: logger
    
