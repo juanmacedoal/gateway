@@ -30,7 +30,7 @@ public class ZuulConfiguration {
 	@Bean
 	public PreZuulFilter preZuulFilter() {
 
-		log.debug("PreZuulFilter enabled.");
+		// log.debug("PreZuulFilter enabled.");
 
 		return new PreZuulFilter();
 	}
@@ -43,7 +43,7 @@ public class ZuulConfiguration {
 	@Bean
 	public RouteZuulFilter routeZuulFilter() {
 
-		log.debug("RouteZuulFilter enabled.");
+		// log.debug("RouteZuulFilter enabled.");
 
 		return new RouteZuulFilter();
 	}
@@ -56,7 +56,7 @@ public class ZuulConfiguration {
 	@Bean
 	public PostZuulFilter postZuulFilter() {
 
-		log.debug("PostZuulFilter enabled.");
+		// log.debug("PostZuulFilter enabled.");
 
 		return new PostZuulFilter();
 	}
@@ -69,7 +69,7 @@ public class ZuulConfiguration {
 	@Bean
 	public ErrorZuulFilter errorZuulFilter() {
 
-		log.debug("ErrorZuulFilter enabled.");
+		// log.debug("ErrorZuulFilter enabled.");
 
 		return new ErrorZuulFilter();
 	}
@@ -82,7 +82,7 @@ public class ZuulConfiguration {
 	@Bean
 	public UserSessionZuulFilter userSessionZuulFilter() {
 
-		log.debug("UserSessionZuulFilter enabled.");
+		// log.debug("UserSessionZuulFilter enabled.");
 
 		return new UserSessionZuulFilter();
 	}
