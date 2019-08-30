@@ -1,1 +1,0 @@
-package com.gateway.configuration.test;

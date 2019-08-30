@@ -4,24 +4,6 @@
 spring:  
   application:
     name: gateway
-    
-# --------------------------------------------
-# CLOUD CONFIGURATION
-# --------------------------------------------     
-  cloud:
-    service-registry:
-      auto-registration:
-        fail-fast: false
-    config:
-      enabled: true     
-      label: ${GITCONFIG_LABEL:master}
-      fail-fast: false
-      retry: 
-        max-interval: 2000
-        max-attempts: 5            
-      discovery:
-        enabled: true
-        service-id: cloud-config  
 
 # --------------------------------------------
 # EUREKA CONFIGURATION

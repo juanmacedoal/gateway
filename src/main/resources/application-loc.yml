@@ -1,0 +1,53 @@
+# --------------------------------------------
+# SERVER CONFIGURATION
+# --------------------------------------------
+server:
+  port: 8083
+
+# --------------------------------------------
+# LOG CONFIGURATION
+# --------------------------------------------  
+logging:
+  pattern: 
+    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+  
+# --------------------------------------------
+# ROUTES CONFIGURATION
+# --------------------------------------------
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+      - id: discovery
+        uri: http://localhost:8082
+        predicates:
+        - Path=/eureka
+        filters:
+        - StripPrefix=1
+      - id: discovery
+        uri: http://localhost:8082/eureka/js/
+        predicates:
+        - Path=/eureka/js/**
+      - id: discovery
+        uri: http://localhost:8082/eureka/css/
+        predicates:
+        - Path=/eureka/css/** 
+      - id: discovery
+        uri: http://localhost:8082/eureka/images/
+        predicates:
+        - Path=/eureka/images/**
+      - id: discovery
+        uri: http://localhost:8082/eureka/fonts/
+        predicates:
+        - Path=/eureka/fonts/**
+      - id: cloud-config
+        uri: lb://cloud-config
+        predicates:
+        - Path=/api/config/**
+        filters:
+        - StripPrefix=2
+
