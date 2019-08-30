@@ -23,25 +23,25 @@ spring:
           lower-case-service-id: true
       routes:
       - id: discovery
-        uri: https://discovery-jm.heroku
+        uri: https://discovery-jm.herokuapp.com/
         predicates:
         - Path=/eureka
         filters:
         - StripPrefix=1
       - id: discovery
-        uri: https://discovery-jm.heroku/eureka/js/
+        uri: https://discovery-jm.herokuapp.com/eureka/js/
         predicates:
         - Path=/eureka/js/**
       - id: discovery
-        uri: http://discovery-jm.heroku/eureka/css/
+        uri: https://discovery-jm.herokuapp.com/eureka/css/
         predicates:
         - Path=/eureka/css/** 
       - id: discovery
-        uri: http://discovery-jm.heroku/eureka/images/
+        uri: https://discovery-jm.herokuapp.com/eureka/images/
         predicates:
         - Path=/eureka/images/**
       - id: discovery
-        uri: http://discovery-jm.heroku/eureka/fonts/
+        uri: https://discovery-jm.herokuapp.com/eureka/fonts/
         predicates:
         - Path=/eureka/fonts/**
       - id: cloud-config
