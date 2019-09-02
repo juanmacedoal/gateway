@@ -4,23 +4,54 @@
 server:
   port: 8083
 
+
+# --------------------------------------------
+# ROUTING ACTUATOR CONFIGURATION 
+# --------------------------------------------    
+management:
+  endpoints:
+    gateway:
+      enabled: true
+    web:
+      exposure:
+        include: gateway, health, info, env, metrics 
+      base-path: /actuator
+
 # --------------------------------------------
 # LOG CONFIGURATION
 # --------------------------------------------  
 logging:
   pattern: 
     console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
-  
+
 # --------------------------------------------
-# ROUTES CONFIGURATION
-# --------------------------------------------
+# SPRING CONFIGURATION
+# -------------------------------------------- 
 spring:
   cloud:
     gateway:
+        
+# --------------------------------------------
+# CORS CONFIGURATION
+# --------------------------------------------
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:4200"
+            allowedMethods: 
+            - GET
+   
+# --------------------------------------------
+# DISCOVERY CONFIGURATION
+# --------------------------------------------
       discovery:
         locator:
           enabled: true
           lower-case-service-id: true
+
+# --------------------------------------------
+# ROUTES CONFIGURATION
+# --------------------------------------------
       routes:
       - id: discovery
         uri: http://localhost:8082
@@ -45,10 +76,14 @@ spring:
         predicates:
         - Path=/eureka/fonts/**
       - id: cloud-config
-        uri: lb://cloud-config
+        uri: http://localhost:8080
         predicates:
         - Path=/api/config/**
         filters:
         - StripPrefix=2
+        - name: Hystrix
+          args:
+            name: hystrix
+            fallbackUri: forward:/fallback/config
 
           
