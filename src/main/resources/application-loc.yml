@@ -13,9 +13,6 @@ management:
     gateway:
       enabled: true
     web:
-#      cors:
-#        allowed-origins: "https://google.com"
-#        allowed-methods: "*"
       exposure:
         include: gateway, health, info, env, metrics 
       base-path: /manage

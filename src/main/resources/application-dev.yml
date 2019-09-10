@@ -50,3 +50,7 @@ spring:
         - Path=/api/config/**
         filters:
         - StripPrefix=2
+        - name: Hystrix
+          args:
+            name: hystrix
+            fallbackUri: forward:/fallback/config
