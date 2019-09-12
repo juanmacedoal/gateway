@@ -21,8 +21,13 @@ management:
 # LOG CONFIGURATION
 # --------------------------------------------  
 logging:
+  level:
+    org:
+      springframework: INFO
   pattern: 
     console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+  file: ${spring.application.name}.log
+  path: /var/log
 
 # --------------------------------------------
 # SPRING CONFIGURATION
@@ -50,7 +55,7 @@ spring:
           lower-case-service-id: true
 
 # --------------------------------------------
-# ROUTES CONFIGURATION
+# CLOUD ROUTES CONFIGURATION
 # --------------------------------------------
       routes:
       - id: discovery
@@ -85,5 +90,19 @@ spring:
           args:
             name: hystrix
             fallbackUri: forward:/fallback/config
+        
+# --------------------------------------------
+# MICROSERVICES ROUTES CONFIGURATION
+# --------------------------------------------
+      - id: login
+        uri: http://localhost:8102
+        predicates:
+        - Path=/api/login/**
+        filters:
+        - StripPrefix=2
+        - name: Hystrix
+          args:
+            name: hystrix
+            fallbackUri: forward:/fallback/microservices
 
           

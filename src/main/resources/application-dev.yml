@@ -8,11 +8,15 @@ server:
 # LOG CONFIGURATION
 # --------------------------------------------  
 logging:
+  level:
+    org:
+      springframework: INFO
   pattern: 
     console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+
   
 # --------------------------------------------
-# ROUTES CONFIGURATION
+# CLOUD ROUTES CONFIGURATION
 # --------------------------------------------
 spring:
   cloud:
@@ -54,3 +58,18 @@ spring:
           args:
             name: hystrix
             fallbackUri: forward:/fallback/config
+            
+            
+# --------------------------------------------
+# MICROSERVICES ROUTES CONFIGURATION
+# --------------------------------------------
+      - id: login
+        uri: http://localhost:8102
+        predicates:
+        - Path=/api/login/**
+        filters:
+        - StripPrefix=2
+        - name: Hystrix
+          args:
+            name: hystrix
+            fallbackUri: forward:/fallback/microservices
